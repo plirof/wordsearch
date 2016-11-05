@@ -13,7 +13,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-import React, { Component, PropTypes } from 'react'
+import React, {Component, PropTypes} from 'react'
 import Explosion from './explosion'
 
 export default class Cell extends Component {
@@ -23,7 +23,7 @@ export default class Cell extends Component {
       var divs = [];
       let counter = 0;
       while (counter < 16) {
-        divs.push(<Explosion explosionNumber={counter+1} key={'exp'+counter} {...this.props} onCellExplosionFragment={this.props.onCellExplosionFragment}/>);
+        divs.push(<Explosion explosionNumber={counter + 1} key={'exp' + counter} {...this.props} onCellExplosionFragment={this.props.onCellExplosionFragment}/>);
         counter++;
       }
       return divs
@@ -36,7 +36,7 @@ export default class Cell extends Component {
   render() {
 
     const myStyle = {
-      background: this.props.selected ? '#ff4081' : this.props.partOfWordFound ? 'lightGreen' : 'lightGray',
+      background: this.props.selected ? '#ff4081' : this.props.partOfWordFound ? '#09BF22' : 'lightGray',
       'borderRadius': 3 + 'px',
       lineHeight: 38 + 'px',
       fontSize: 25 + 'px',
@@ -54,6 +54,13 @@ export default class Cell extends Component {
         {this.buildInnerComponent(this.props.value)}
       </div>
     )
+  }
+
+  shouldComponentUpdate(nextProps) {
+    return (nextProps.explode != this.props.explode ||
+    nextProps.selected !== this.props.selected ||
+    nextProps.partOfWordFound !== this.props.partOfWordFound ||
+    nextProps.value !== this.props.value);
   }
 
   componentDidUpdate(prevProps, prevState) {

@@ -13,7 +13,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-import React, { Component, PropTypes } from 'react'
+import React, {Component, PropTypes} from 'react'
 
 export default class Explosion extends Component {
 
@@ -23,6 +23,12 @@ export default class Explosion extends Component {
     )
   }
 
+  shouldComponentUpdate(nextProps) {
+    return (nextProps.rowPos != this.props.rowPos ||
+    nextProps.selected !== this.props.selected ||
+    nextProps.columnPos !== this.props.columnPos);
+  }
+
   componentDidMount() {
     this.refs.comp.addEventListener("animationend", (e)=> {
       e.target.className = '';
@@ -30,7 +36,6 @@ export default class Explosion extends Component {
         this.props.onCellExplosionFragment(this.props.rowPos, this.props.columnPos);
       }
     }, false);
-
   }
 
   componentWillUnmount() {
